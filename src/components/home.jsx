@@ -5,19 +5,22 @@ const Home = () => {
   const [message, setMessage] = useState("no way");
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/user", {
+        const response = await axios.get("user/", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("myToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         });
+        console.log(response);
         const user = response.data;
         setMessage(`hi ${user.first_name} ${user.last_name}`);
       } catch (e) {
         setMessage("no way");
       }
-    })();
+    };
+
+    fetchData();
   }, []);
 
   return <div>{message}</div>;

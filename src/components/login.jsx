@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,19 +13,19 @@ const Login = () => {
     e.preventDefault();
 
     // Send a POST request
-    const response = await axios(
-      {
-        method: "post",
-        url: "http://localhost:8000/api/login/",
-        data: {
-          email: email,
-          password: password,
-        },
+    const response = await axios({
+      method: "post",
+      url: "login/",
+      data: {
+        email: email,
+        password: password,
       },
-      { withCredentials: true }
-    );
-    console.log(response.data.token);
-    localStorage.setItem("myToken", response.data.token);
+    });
+
+    localStorage.setItem("access_token", response.data.access_token);
+    localStorage.setItem("refresh_token", response.data.refresh_token);
+    Cookies.set("refresh_token", response.data.refresh_token);
+    Cookies.set("access_token", response.data.access_token);
 
     setRedirect(true);
   };

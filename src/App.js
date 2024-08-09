@@ -5,6 +5,8 @@ import Nav from "./components/nav";
 import Register from "./components/register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import "./components/interceptors/axios";
+
 function App() {
   return (
     <BrowserRouter>
